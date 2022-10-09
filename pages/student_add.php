@@ -170,13 +170,15 @@
        function validate_phone() {
         let phone = $('#phone').val();
          if(phone.length == 0 ) {
-            $('#phone').css("border-bottom", '')
+            $('#phone').removeClass('is-invalid')
+            $('#phone').removeClass('is-valid')
             $('#submit-form-add').attr('disabled', false)
          }else if(phone.length == 10){
-            $('#phone').css("border-bottom", '10px green')
+            $('#phone').addClass('is-valid')
+            $('#phone').removeClass('is-invalid')
             $('#submit-form-add').attr('disabled', false)
          }else {
-            $('#phone').css("border-bottom", '10px red')
+            $('#phone').addClass('is-invalid')
             $('#submit-form-add').attr('disabled', true)
          }
        } 
