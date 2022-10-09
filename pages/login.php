@@ -19,7 +19,8 @@
     </div>
     <!-- /.login-logo -->
     <div class="card">
-      <div class="card-body login-card-body">
+      <form method="post" id="form-login">
+        <div class="card-body login-card-body">
           <div class="input-group mb-3">
             <input type="text" name="username" require class="form-control" placeholder="Username" id="username">
             <div class="input-group-append">
@@ -39,11 +40,12 @@
           <div class="row">
             <!-- /.col -->
             <div class="col-6">
-              <button onclick="login()" value="Sign In" class="btn btn-primary btn-block">Sign In</button> 
+              <button type="submit" value="Sign In" class="btn btn-primary btn-block">Sign In</button>
             </div>
             <!-- /.col -->
           </div>
-      </div>
+        </div>
+      </form>
       <!-- /.login-card-body -->
     </div>
   </div>
@@ -52,32 +54,33 @@
 
   <?php include dirname(__FILE__) . '/layout/link_script.php'; ?>
   <script>
-    /* function login */
-    function login() {
-      $.ajax({
-        type: 'POST',
-        data: { username: $('#username').val(), password: $('#password').val() },
-        url: '../api/auth/login.php',
-        dataType: 'JSON',
-        success: function(res) {
-          console.log(res)
-          Toast.fire({
-            icon: 'success',
-            title: res.msg
+    $('#form-login').submit(function(e) {
+          e.preventDefault()
+          $.ajax({
+            type: 'POST',
+            data: {
+              username: $('#username').val(),
+              password: $('#password').val()
+            },
+            url: '../api/auth/login.php',
+            dataType: 'JSON',
+            success: function(res) {
+              Toast.fire({
+                icon: 'success',
+                title: res.msg
+              })
+              setInterval(function() {
+                window.location.href = 'index.html'
+              }, 1000)
+            },
+            error: function(err) {
+              Toast.fire({
+                icon: 'error',
+                title: err.responseJSON.msg
+              })
+            }
           })
-          setInterval(function(){
-            window.location.href = 'index.html'
-          }, 1000)
-        },
-        error: function(err) {
-          Toast.fire({
-            icon: 'error',
-            title: err.responseJSON.msg
-          })
-        }
-      })
-    }
-    /* function login */
+        })
   </script>
 </body>
 

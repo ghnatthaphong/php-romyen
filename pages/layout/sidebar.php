@@ -3,20 +3,22 @@
   function active_menu($arr_page) {
     foreach($arr_page as $value) {
       if($_SERVER['PHP_SELF'] == '/'.$GLOBALS['project_name'].'/pages/'.$value) {
-        return 'menu_open';
+        return 'menu-open';
       }else {
-        return 'menu_close';
+        return 'menu-close';
       }    
     }
   }
 
   function active_page($active_page) {
-    if($_SERVER['PHP_SELF'] == '/'.$GLOBALS['project_name'].'/pages/'.$active_page) {
+    foreach($active_page as $value) {
+      if($_SERVER['PHP_SELF'] == '/'.$GLOBALS['project_name'].'/pages/'.$value) {
       return 'active';
     }else {
       return '';
     }    
   }
+}
 ?>
 <aside class="main-sidebar sidebar-light-success elevation-4">
     <!-- Brand Logo -->
@@ -27,13 +29,7 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="info">
-          <a href="#" class="d-block">สวัสดีคุณ </a>
-        </div>
-      </div>
-
+      <div class="my-2"></div>
       <!-- SidebarSearch Form -->
       <div class="form-inline">
         <div class="input-group" data-widget="sidebar-search">
@@ -50,7 +46,7 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
-            <a href="index.html" class="nav-link <?php echo active_page('index.php') ?> ">
+            <a href="index.html" class="nav-link <?php echo active_page(['index.php']) ?> ">
               <i class="nav-icon  fas fa-tachometer-alt"></i>
               <p>
                 รายงาน
@@ -59,7 +55,7 @@
             </a>
           </li>
           <li class="nav-item <?php echo active_menu(['student_view.php', 'student_add.php', 'student_edit.php']) ?>">
-            <a href="#" class="nav-link">
+            <a href="#" class="nav-link <?php echo active_page(['student_view.php']) ?>">
               <i class="bi bi-person-rolodex nav-icon"></i>
               <p>
                 จัดการข้อมูลนักเรียน
@@ -68,13 +64,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="student_view.html" class="nav-link">
+                <a href="student_view.html" class="nav-link <?php echo active_page(['student_view.php']) ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>รายชื่อนักเรียน</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="student_add.html" class="nav-link">
+                <a href="student_add.html" class="nav-link <?php echo active_page(['student_add.php']) ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>ฟอร์มสมัครเรียน</p>
                 </a>

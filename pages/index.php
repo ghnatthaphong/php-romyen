@@ -1,5 +1,6 @@
 <?php $page_name = 'รายงาน' ?>
 <?php include dirname(__FILE__).'/env.php' ?>
+<?php include dirname(__FILE__).'/layout/check_user.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
