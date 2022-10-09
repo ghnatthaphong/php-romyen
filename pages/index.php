@@ -86,5 +86,8 @@
 
 <!-- REQUIRED SCRIPTS -->
   <?php include dirname(__FILE__).'/layout/link_script.php' ?>
+  <!-- chart -->
+  <script src="../plugins/chart.js/Chart.min.js"></script>
+  <script src="../dist/js/pages/dashboard3.js"></script>
 </body>
 </html>

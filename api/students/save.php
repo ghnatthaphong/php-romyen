@@ -25,7 +25,7 @@
         $stmt->execute([$firstname, $lastname]);
         $count = $stmt->fetchColumn();
         if($count > 0) {
-            echo 'Student already exists!';
+            echo 'มีรายชื่อนักเรียนคนนี้แล้ว';
             http_response_code(400);
             return;
         }
@@ -66,7 +66,7 @@
         $stmt = $conn->prepare($sql);
         $stmt->execute([$p_prefix, $p_firstname, $p_lastname, $p_prefix.$p_firstname." ".$p_lastname, $phone, $address, $result['id']]); 
         http_response_code(200);
-        echo 'Created successfully';
+        echo 'เพิ่มข้อมูลสำเร็จ';
     } else {
         http_response_code(500);
         echo 'Server Error';

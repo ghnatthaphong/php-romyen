@@ -11,16 +11,6 @@
     <title><?= $site_name ?> | <?= $page_name ?></title>
     <?php include dirname(__FILE__) . '/layout/link_style.php' ?>
 </head>
-<!--
-`body` tag options:
-
-  Apply one or more of the following classes to to the body tag
-  to get the desired effect
-
-  * sidebar-collapse
-  * sidebar-mini
--->
-
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
 
@@ -37,7 +27,7 @@
                 <div class="container-fluid">
                     <div class="card">
                         <div class="card-body">
-                            <form method="post">
+                            <form id="form-add" method="post">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <!-- new card -->
@@ -49,23 +39,23 @@
                                                 <div class="row">
                                                     <div class="col-md-2">
                                                         <label for="std_prefix">คำนำหน้า</label>
-                                                        <select class="custom-select form-control-border border-width-2" id="std_prefix">
+                                                        <select class="custom-select " id="std_prefix">
                                                             <?php foreach ($prefix_arr as $value) { ?>
-                                                                <option value=""><?= $value['name'] ?></option>
+                                                                <option value="<?= $value['name'] ?>"><?= $value['name'] ?></option>
                                                             <?php } ?>
                                                         </select>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label for="std_firstname">ชื่อ</label>
-                                                        <input required type="text" class="form-control form-control-border border-width-2" id="std_firstname" placeholder="ชื่อ">
+                                                        <input required type="text" class="form-control " id="std_firstname" placeholder="ชื่อ">
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label for="std_lastname">นามสกุล</label>
-                                                        <input required type="text" class="form-control form-control-border border-width-2" id="std_lastname" placeholder="นามสกุล">
+                                                        <input required type="text" class="form-control " id="std_lastname" placeholder="นามสกุล">
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label for="std_nickname">ชื่อเล่น</label>
-                                                        <input required type="text" class="form-control form-control-border border-width-2" id="std_nickname" placeholder="ชื่อเล่น">
+                                                        <input required type="text" class="form-control " id="std_nickname" placeholder="ชื่อเล่น">
                                                     </div>
                                                 </div>
                                             </div>
@@ -80,28 +70,28 @@
                                                 <div class="row">
                                                     <div class="col-md-3">
                                                         <label for="p_prefix">คำนำหน้า</label>
-                                                        <select class="custom-select form-control-border border-width-2" id="p_prefix">
+                                                        <select class="custom-select " id="p_prefix">
                                                             <?php $num = 0;
                                                             foreach ($prefix_arr as $value) { ?>
                                                                 <?php if ($num < 2) {
                                                                     $num++;
                                                                     continue;
                                                                 } ?>
-                                                                <option value=""><?= $value['name'] ?></option>
+                                                                <option value="<?= $value['name'] ?>"><?= $value['name'] ?></option>
                                                             <?php } ?>
                                                         </select>
                                                     </div>
                                                     <div class="col-md-5">
                                                         <label for="p_firstname">ชื่อ</label>
-                                                        <input required type="text" class="form-control form-control-border border-width-2" id="p_firstname" placeholder="ชื่อ">
+                                                        <input required type="text" class="form-control " id="p_firstname" placeholder="ชื่อ">
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label for="p_lastname">นามสกุล</label>
-                                                        <input required type="text" class="form-control form-control-border border-width-2" id="p_lastname" placeholder="นามสกุล">
+                                                        <input required type="text" class="form-control " id="p_lastname" placeholder="นามสกุล">
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="phone">เบอร์ติดต่อ</label>
-                                                        <input required type="text" pattern="[0-9]{10}" oninput="validate_phone()" class="form-control form-control-border border-width-2" id="phone" placeholder="เบอร์ติดต่อ">
+                                                        <input required type="text" pattern="[0-9]{10}" oninput="validate_phone()" class="form-control " id="phone" placeholder="เบอร์ติดต่อ">
                                                     </div>
                                                     <div class="col-md-12">
                                                             <label for="address">ที่อยู่</label>
@@ -120,29 +110,29 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <label for="std_class">ระดับชั้น</label>
-                                                        <select class="custom-select form-control-border border-width-2" id="std_prefix">
+                                                        <select class="custom-select " id="std_class">
                                                             <?php foreach ($class_arr as $value) { ?>
-                                                                <option value=""><?= $value['name'] ?></option>
+                                                                <option value="<?= $value['name'] ?>"><?= $value['name'] ?></option>
                                                             <?php } ?>
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="std_room">ห้องเรียน</label>
-                                                        <input required pattern="[0-9]{1}" type="text" class="form-control form-control-border border-width-2" id="std_room" placeholder="ห้องเรียน">
+                                                        <input required pattern="[0-9]{1}" type="text" class="form-control " id="std_room" placeholder="ห้องเรียน">
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label for="year">ปีที่</label>
-                                                        <select class="custom-select form-control-border border-width-2" id="year">
+                                                        <select class="custom-select " id="std_year">
                                                             <?php foreach ($year_arr as $value) { ?>
-                                                                <option value=""><?= $value ?></option>
+                                                                <option value="<?= $value ?>"><?= $value ?></option>
                                                             <?php } ?>
                                                         </select>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <label for="term">เทอม</label>
-                                                        <select class="custom-select form-control-border border-width-2" id="term">
+                                                        <select class="custom-select " id="std_term">
                                                             <?php foreach ($term_arr as $value) { ?>
-                                                                <option value=""><?= $value['name'] ?></option>
+                                                                <option value="<?= $value['name'] ?>"><?= $value['name'] ?></option>
                                                             <?php } ?>
                                                         </select>
                                                     </div>
@@ -182,6 +172,37 @@
             $('#submit-form-add').attr('disabled', true)
          }
        } 
+
+       $('#form-add').submit(function(e) {
+            
+            e.preventDefault()
+            $.ajax({
+                url: '../api/students/save.php',
+                type: 'POST',
+                data: {
+                    prefix: $('#std_prefix').val(), 
+                    firstname: $('#std_firstname').val(), 
+                    lastname: $('#std_lastname').val(), 
+                    nickname: $('#std_nickname').val(), 
+                    room: $('#std_room').val(), 
+                    year: $('#std_year').val(), 
+                    term: $('#std_term').val(), 
+                    class: $('#std_class').val(), 
+                    p_prefix: $('#p_prefix').val(), 
+                    p_firstname: $('#p_firstname').val(), 
+                    p_lastname: $('#p_lastname').val(), 
+                    phone: $('#phone').val(), 
+                    address: $('#address').val(), 
+                },
+                success: function(res) {
+                    toastr.success(res)
+                    $('#form-add')[0].reset();
+                },
+                error: function(err) {
+                    toastr.error(err.responseText)
+                }
+            })
+       })
     </script>
 </body>
 

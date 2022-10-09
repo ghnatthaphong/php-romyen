@@ -47,29 +47,18 @@
                                         <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
                                             <thead>
                                                 <tr>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Browser</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Browser</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Platform(s)</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Engine version</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">CSS grade</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">ลำดับ</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">รหัสนักเรียน</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">ชื่อ-นามสกุล</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">ชื่อเล่น</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">ชั้นปีที่</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Action</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr class="odd">
-                                                    <td class="dtr-control sorting_1" tabindex="0">Gecko</td>
-                                                    <td>Firefox 1.0</td>
-                                                    <td>Win 98+ / OSX.2+</td>
-                                                    <td>1.7</td>
-                                                    <td>A</td>
-                                                </tr>
-                                                <tr class="even">
-                                                    <td class="dtr-control sorting_1" tabindex="0">Gecko</td>
-                                                    <td>Firefox 1.5</td>
-                                                    <td>Win 98+ / OSX.2+</td>
-                                                    <td>1.8</td>
-                                                    <td>A</td>
-                                                </tr>
+                                               <!-- ------------------ result ---------------------- -->
+                                            <tbody id="result">
                                             </tbody>
+                                               <!-- ------------------ result ---------------------- -->
                                         </table>
                                     </div>
                                 </div>
@@ -89,14 +78,47 @@
     <!-- REQUIRED SCRIPTS -->
     <?php include dirname(__FILE__) . '/layout/link_script.php' ?>
     <script>
-        $(function() {
-            $("#example1").DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        });
+        var html = '';
+        function clear_tbody() {
+            $('#result').html('');
+        }
+        function render() {
+            $.ajax({
+                url: '../api/students/getall.php',
+                dataType: 'JSON',
+                type: 'GET',
+                success: function(res) {
+                    console.log(res);
+                    let number = 1;
+                    for(let i = 0; i < res.length; i++) {
+                        html += `
+                        <tr class="odd">
+                            <td>${number++}</td>
+                            <td>${res[i].code}</td>
+                            <td>${res[i].fullname}</td>
+                            <td>${res[i].nickname}</td>
+                            <td>${res[i].class}</td>
+                            <td>
+                                <button data-id='${res[i].id}' class="btn btn-primary">ดูรายละเอียด</button>
+                                <button data-id='${res[i].id}' class="btn btn-default">แก้ไขข้อมูล</button>
+                            </td>
+                        </tr>
+                        `
+                    }
+                    setTimeout(() => {
+                        clear_tbody()
+                        $('#result').append(html);
+                        $("#example1").DataTable({
+                            "responsive": true,
+                            "lengthChange": false,
+                            "autoWidth": false,
+                            "buttons": ["copy", "csv", "excel", "pdf", "print"]
+                        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                    }, 500);
+                }
+            })
+        }
+        render();
     </script>
 </body>
 
