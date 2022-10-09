@@ -1,13 +1,11 @@
+<?php include dirname(__FILE__) . '/env.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" href=".//" />
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <?php include dirname(__FILE__) . '/layouts/css.php'; ?>
+  <?php include dirname(__FILE__) . '/layout/link_style.php'; ?>
   <title><?= $site_name ?> | Login</title>
 </head>
 
@@ -15,8 +13,8 @@
   <div class="login-box">
     <div class="login-logo">
       <p>
-        <img src="../assets/brand/icon.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" width="80" height="80" style="opacity: .8">
-        <b>Administrator</b>
+        <img src="<?php echo $GLOBALS['path_logo'] ?>" alt="<?= $site_name ?>" class="brand-image img-circle elevation-3" width="80" height="80" style="opacity: .8">
+        <b>Administrator </b>
       </p>
     </div>
     <!-- /.login-logo -->
@@ -52,7 +50,7 @@
   <!-- /.login-box -->
 
 
-  <?php include dirname(__FILE__) . '/layouts/script.php'; ?>
+  <?php include dirname(__FILE__) . '/layout/link_script.php'; ?>
   <script>
     /* function login */
     function login() {
