@@ -6,6 +6,8 @@
 <script src="../dist/js/adminlte.js"></script>
 
 <!-- OPTIONAL SCRIPTS -->
+<!-- cdn -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- data tables -->
 <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>

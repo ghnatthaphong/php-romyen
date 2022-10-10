@@ -93,6 +93,7 @@
                     toastr.success(res)
                     setTimeout(() => {
                         $('#form-add')[0].reset();
+                        window.location.href = 'producet_view.php';
                     }, 1000);
                 },
                 error: function(err) {

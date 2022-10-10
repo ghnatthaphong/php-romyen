@@ -78,7 +78,6 @@
                 data: { id : id },
                 type: 'POST',
                 success: function(res) {
-                    console.log(res)
                     $('#detail_prefix').val(res[0].prefix)
                     $('#detail_fullname').val(res[0].fullname)
                     $('#detail_nickname').val(res[0].nickname)

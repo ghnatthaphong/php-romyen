@@ -47,7 +47,7 @@ function active_page($active_page = array())
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item">
           <a href="index.html" class="nav-link <?php echo active_page(['index.php']) ?> ">
-            <i class="nav-icon  fas fa-tachometer-alt"></i>
+            <i class="nav-icon bi bi-graph-up-arrow"></i>
             <p>
               รายงาน
               <span class="right badge badge-danger">New</span>
@@ -80,8 +80,9 @@ function active_page($active_page = array())
 
         <!-- permission admin -->
         <?php if ($_SESSION['user_role']  === 'admin') { ?>
-          <li class="nav-item <?php echo active_menu(['product_view.php', 'product_add.php', 'product_edit.php']) ?>">
-            <a href="#" class="nav-link <?php echo active_page(['product_view.php', 'product_add.php', 'product_edit.php']) ?>">
+          <?php $all_page_product = array('product_view.php', 'product_add.php', 'product_edit.php', 'finance_view.php', 'finance_add.php', 'finance_edit.php'); ?>
+          <li class="nav-item <?php echo active_menu($all_page_product) ?>">
+            <a href="#" class="nav-link <?php echo active_page($all_page_product) ?>">
               <i class="bi bi-bar-chart nav-icon"></i>
               <p>
                 จัดการค่าใช้จ่าย
@@ -90,15 +91,38 @@ function active_page($active_page = array())
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="product_view.html" class="nav-link <?php echo active_page(['product_view.php', 'product_edit.php']) ?>">
+                <a href="finance_view.html" class="nav-link <?php echo active_page(['finance_view.php', 'finance_edit.php']) ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>รายการค่าใช้จ่าย</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="product_add.html" class="nav-link <?php echo active_page(['product_add.php']) ?>">
+                <a href="product_view.html" class="nav-link <?php echo active_page(['prduct_view.php', 'product_add.php']) ?>">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>เพิ่มข้อมูลค่าใช้จ่าย</p>
+                  <p>รายการข้อมูลสินค้า</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item <?php echo active_menu(['user_view.php', 'user_add.php', 'user_edit.php']) ?>">
+            <a href="#" class="nav-link <?php echo active_page(['user_view.php', 'user_add.php', 'user_edit.php']) ?>">
+              <i class="bi bi-people nav-icon"></i>
+              <p>
+                จัดการข้อมูลสมาชิก
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="user_view.html" class="nav-link <?php echo active_page(['user_view.php', 'user_edit.php']) ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>รายชื่อสมาชิก</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="user_add.html" class="nav-link <?php echo active_page(['user_add.php']) ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>เพิ่มสามาชิก</p>
                 </a>
               </li>
             </ul>

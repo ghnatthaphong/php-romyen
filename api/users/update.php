@@ -25,7 +25,7 @@
         $stmt = $conn->prepare($sql);
         $stmt->execute([$prefix, $firstname, $lastname, $prefix.$firstname." ".$lastname, $phone, $hashpassword, $role , $id]);
         http_response_code(200);
-        echo 'Updated successfully';
+        echo 'อัพเดทข้อมูลเรียนร้อยแล้ว';
     } else {
         http_response_code(500);
         echo 'Server Error';

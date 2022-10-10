@@ -16,7 +16,7 @@
         $stmt->execute([$username]);
         $count = $stmt->fetchColumn();
         if($count > 0) {
-            echo 'Username already exists!';
+            echo 'มีชื่อผู้ใช้นีอยู่แล้ว!';
             http_response_code(400);
             return;
         }
@@ -24,7 +24,7 @@
         $stmt = $conn->prepare($sql);
         $stmt->execute([$prefix, $firstname, $lastname, $prefix.$firstname." ".$lastname, $phone? $phone: null, $username, $hashpassword, $role]); 
         http_response_code(200);
-        echo 'Created successfully';
+        echo 'เพิ่มข้อมูลสมาชิกเรียบร้อยแล้ว';
     } else {
         http_response_code(500);
         echo 'Server Error';

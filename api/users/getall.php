@@ -1,14 +1,13 @@
 <?php 
     include '../db.php';
-    
-    if($_SERVER['REQUEST_METHOD'] == 'GET') {
+    session_start(); 
+    $_SESSION['user_role']? $_SESSION['user_role'] : $_SESSION['user_role'] = '' ;
+    if($_SERVER['REQUEST_METHOD'] == 'GET' && $_SESSION['user_role'] === 'admin') {
         $sql = 'SELECT * FROM users';
         $stmt = $conn->prepare($sql);
         $stmt->execute();
 
         $data['result'] = array();
-        $count = $stmt->rowCount();
-        array_push($data['result'], ["count" => $count]);
         foreach($stmt->fetchAll() as $value) {
             array_push($data['result'], $value);
         }

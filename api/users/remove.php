@@ -7,12 +7,9 @@
 
         $sql = 'DELETE FROM users WHERE id = ?';
         $stmt = $conn->prepare($sql);
-        if($stmt->execute([$id])){
-            http_response_code(200);
-            echo json_encode('remove recorded successfully');
-        }
-        http_response_code(400);
-        echo json_encode('Bad request');
+        $stmt->execute([$id]);
+        http_response_code(200);
+        echo 'ลบข้อมูลเรียบร้อยแล้ว';
     } else {
         http_response_code(500);
         echo 'Server Error';
