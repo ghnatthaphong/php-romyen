@@ -1,4 +1,4 @@
-<?php $page_name = 'ฟอร์มสมัครเรียน' ?>
+<?php $page_name = 'ฟอร์มแก้ไขข้อมูลนักเรียน' ?>
 <?php include dirname(__FILE__) . '/layout/get_model.php' ?>
 <?php include dirname(__FILE__) . '/env.php' ?>
 <?php include dirname(__FILE__) . '/layout/check_user.php' ?>
@@ -136,14 +136,25 @@
                                                             <?php } ?>
                                                         </select>
                                                     </div>
+                                                    <div class="col-md-8">
+                                                        <label for="status">สถานะการศึกษา</label>
+                                                        <select class="custom-select " id="std_status">
+                                                            <?php foreach ($status_arr as $value) { ?>
+                                                                <option value="<?= $value['name'] ?>"><?= $value['name'] ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12 d-flex justify-content-between">
                                         <p> </p>
-                                        <input type="submit" id="submit-form-add" value="บันทึกข้อมูล" class="btn btn-primary">
-                                    </div>
+                                        <div class="">
+                                            <input type="submit" id="submit-form-add" value="บันทึกข้อมูล" class="btn btn-primary">
+                                            <a href="student_view.php" class="btn btn-default">ย้อนกลับ</a>
+                                        </div>
+                                    </input>
                                 </div>
                             </form>
                         </div>
@@ -153,7 +164,6 @@
         </div>
     </div>
     <!-- ./wrapper -->
-
     <?php include dirname(__FILE__) . '/layout/footer.php' ?>
     <!-- REQUIRED SCRIPTS -->
     <?php include dirname(__FILE__) . '/layout/link_script.php' ?>
@@ -174,13 +184,46 @@
          }
        } 
 
+       
+       function render() {
+            $.ajax({
+                url: '../api/students/getbyid.php',
+                type: 'POST',
+                data: {
+                    id: <?= $_POST['id'] ?>
+                },
+                dataType: 'JSON',
+                success: function(res) {
+                    $('#std_prefix').val(res[0].prefix) 
+                    $('#std_firstname').val(res[0].firstname) 
+                    $('#std_lastname').val(res[0].lastname)
+                    $('#std_nickname').val(res[0].nickname)
+                    $('#std_room').val(res[0].room)
+                    $('#std_year').val(res[0].year)
+                    $('#std_term').val(res[0].term) 
+                    $('#std_class').val(res[0].class) 
+                    $('#p_prefix').val(res[0].p_prefix) 
+                    $('#p_firstname').val(res[0].p_firstname)
+                    $('#p_lastname').val(res[0].p_lastname) 
+                    $('#phone').val(res[0].phone) 
+                    $('#std_status').val(res[0].status) 
+                    $('#address').val(res[0].address) 
+                },
+                error: function(err) {
+                    toastr.error(err.responseText)
+                }
+            })
+       }
+       render()
+
        $('#form-add').submit(function(e) {
             
             e.preventDefault()
             $.ajax({
-                url: '../api/students/save.php',
+                url: '../api/students/update.php',
                 type: 'POST',
                 data: {
+                    id: <?= $_POST['id'] ?>,
                     prefix: $('#std_prefix').val(), 
                     firstname: $('#std_firstname').val(), 
                     lastname: $('#std_lastname').val(), 
@@ -194,13 +237,14 @@
                     p_lastname: $('#p_lastname').val(), 
                     phone: $('#phone').val(), 
                     address: $('#address').val(), 
+                    status: $('#std_status').val() 
                 },
                 success: function(res) {
                     toastr.success(res)
                     setTimeout(() => {
-                        $('#form-add')[0].reset();
-                        validate_phone()
+                        window.location.href = 'student_view.html'
                     }, 1000);
+
                 },
                 error: function(err) {
                     toastr.error(err.responseText)

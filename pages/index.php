@@ -18,7 +18,7 @@
   * sidebar-collapse
   * sidebar-mini
 -->
-<body class="hold-transition sidebar-mini">
+<body class="<?= $GLOBALS['class_body'] ?>">
 <div class="wrapper">
 
   <?php include dirname(__FILE__).'/layout/preloader.php' ?>
@@ -81,6 +81,7 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  <?php include dirname(__FILE__).'/layout/footer.php' ?>
 </div>
 <!-- ./wrapper -->
 

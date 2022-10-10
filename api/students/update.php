@@ -15,7 +15,6 @@
         $status = $_POST['status'];
 
         // all request of parent
-        $p_id = $_POST['p_id'];
         $p_prefix = $_POST['p_prefix'];
         $p_firstname = $_POST['p_firstname'];
         $p_lastname = $_POST['p_lastname'];
@@ -25,20 +24,10 @@
         // session user_id
         $user_id = $_SESSION['user_id'];
 
-        // check students already exists!
-        // $sql = 'SELECT COUNT(*) FROM students WHERE firstname = ? AND lastname = ?';
-        // $stmt = $conn->prepare($sql);
-        // $stmt->execute([$firstname, $lastname]);
-        // $count = $stmt->fetchColumn();
-        // if($count > 0) {
-        //     echo 'Student already exists!';
-        //     http_response_code(400);
-        //     return;
-        // }
         
         // generate student code
         // check student code this year
-        $sql = 'SELECT code, year_at FROM students WHERE year_at = ? AND class = ? ORDER BY code DESC LIMIT 1';
+        $sql = 'SELECT code, year FROM students WHERE year = ? AND class = ? ORDER BY code DESC LIMIT 1';
         $stmt = $conn->prepare($sql);
         $stmt->execute([$year - 543, $class]);
         $std = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -56,16 +45,14 @@
         }
 
         // update
-        $sql = 'UPDATE students SET code = ?, prefix = ?, firstname = ?, lastname = ?, fullname = ?, nickname = ?, class = ?, room = ?, term = ?, year_at = ?, status = ? WHERE id = ?';
+        $sql = 'UPDATE students SET code = ?, prefix = ?, firstname = ?, lastname = ?, fullname = ?, nickname = ?, class = ?, room = ?, term = ?, year = ?,
+                                status = ?, p_prefix = ?, p_firstname = ?, p_lastname = ?, p_fullname = ?, phone = ?, address = ? WHERE id = ?';
         $stmt = $conn->prepare($sql);
-        $stmt->execute([$code, $prefix, $firstname, $lastname, $prefix.$firstname." ".$lastname, $nickname, $class, $room, $term, $year - 543, $status, $id]);
+        $stmt->execute([$code, $prefix, $firstname, $lastname, $prefix.$firstname." ".$lastname, $nickname, $class, $room, $term, $year, $status, 
+                        $p_prefix, $p_firstname, $p_lastname, $p_prefix.$p_firstname.' '.$p_lastname, $phone, $address, $id]);
 
-        // update parent
-        $sql = 'UPDATE parents SET prefix = ?, firstname = ?, lastname = ?, fullname = ?, phone = ?, address = ? WHERE id = ?';
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([$p_prefix, $p_firstname, $p_lastname, $p_prefix.$p_firstname." ".$p_lastname, $phone, $address, $p_id]);
         http_response_code(200);
-        echo 'Updated successfully';
+        echo 'อัพเดทข้อมูลเรียบร้อย';
     } else {
         http_response_code(500);
         echo 'Server Error';

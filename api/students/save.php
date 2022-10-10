@@ -32,9 +32,9 @@
 
         // generate code
         // check student code this year
-        $sql = 'SELECT code, year_at FROM students WHERE year_at = ? AND class = ? ORDER BY code DESC LIMIT 1';
+        $sql = 'SELECT code, year FROM students WHERE year = ? AND class = ? ORDER BY code DESC LIMIT 1';
         $stmt = $conn->prepare($sql);
-        $stmt->execute([$year - 543, $class]);
+        $stmt->execute([$year, $class]);
         $std = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if($stmt->rowCount() > 0) {
@@ -50,21 +50,45 @@
         }
 
         // insert
-        $sql = 'INSERT INTO students(code, prefix, firstname, lastname, nickname, fullname, class, room, term, year_at, status, user_id) VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        $sql = 'INSERT INTO students(code, 
+                                    prefix,
+                                    firstname,
+                                    lastname,
+                                    nickname,
+                                    fullname,
+                                    class,
+                                    room, 
+                                    term, 
+                                    year, 
+                                    status, 
+                                    user_id, 
+                                    p_prefix, 
+                                    p_firstname, 
+                                    p_lastname, 
+                                    p_fullname, 
+                                    phone, 
+                                    address) 
+                                    VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
         $stmt = $conn->prepare($sql);
-        $stmt->execute([$code, $prefix, $firstname, $lastname, $nickname, $prefix.$firstname." ".$lastname, $class, $room, $term, $year - 543, $status, $user_id]); 
+        $stmt->execute([$code, 
+                        $prefix, 
+                        $firstname,
+                        $lastname, 
+                        $nickname, 
+                        $prefix.$firstname." ".$lastname, 
+                        $class, 
+                        $room, 
+                        $term, 
+                        $year, 
+                        $status, 
+                        $user_id, 
+                        $p_prefix, 
+                        $p_firstname, 
+                        $p_lastname, 
+                        $p_prefix.$p_firstname.' '.$p_lastname,
+                        $phone, 
+                        $address]); 
 
-        // get student by code
-        $sql = 'SELECT * FROM students WHERE code = ?';
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([$code]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-
-        // insert 
-        $sql = 'INSERT INTO parents(prefix, firstname, lastname, fullname, phone, address, student_id) VALUE(?, ?, ?, ?, ?, ?, ?)';
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([$p_prefix, $p_firstname, $p_lastname, $p_prefix.$p_firstname." ".$p_lastname, $phone, $address, $result['id']]); 
         http_response_code(200);
         echo 'เพิ่มข้อมูลสำเร็จ';
     } else {

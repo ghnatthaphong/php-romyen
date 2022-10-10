@@ -18,13 +18,12 @@ function active_page($active_page = array())
     }
   }
   return '';
-
 }
 ?>
 <aside class="main-sidebar sidebar-light-success elevation-4">
   <!-- Brand Logo -->
-  <a href="index3.html" class="brand-link">
-    <img src="../dist/img/logo.png" alt="<?= $project_name ?>" class="brand-image img-circle elevation-3" style="opacity: .8">
+  <a href="index.html" class="brand-link">
+    <img src="<?= $GLOBALS['path_logo'] ?>" alt="<?= $project_name ?>" class="brand-image img-circle elevation-3" style="opacity: .8">
     <span class="brand-text font-weight-light"><?= $site_name ?></span>
   </a>
 
@@ -56,7 +55,7 @@ function active_page($active_page = array())
           </a>
         </li>
         <li class="nav-item <?php echo active_menu(['student_view.php', 'student_add.php', 'student_edit.php']) ?>">
-          <a href="#" class="nav-link <?php echo active_page(['student_view.php', 'student_add.php']) ?>">
+          <a href="#" class="nav-link <?php echo active_page(['student_view.php', 'student_add.php', 'student_edit.php']) ?>">
             <i class="bi bi-person-rolodex nav-icon"></i>
             <p>
               จัดการข้อมูลนักเรียน
@@ -65,7 +64,7 @@ function active_page($active_page = array())
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="student_view.html" class="nav-link <?php echo active_page(['student_view.php']) ?>">
+              <a href="student_view.html" class="nav-link <?php echo active_page(['student_view.php', 'student_edit.php']) ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>รายชื่อนักเรียน</p>
               </a>
@@ -78,14 +77,34 @@ function active_page($active_page = array())
             </li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a href="logout.html" class="nav-link <?php echo active_page('logout.php') ?> ">
-            <i class="nav-icon bi bi-box-arrow-left"></i>
-            <p>
-              ออกจากระบบ
-            </p>
-          </a>
-        </li>
+
+        <!-- permission admin -->
+        <?php if ($_SESSION['user_role']  === 'admin') { ?>
+          <li class="nav-item <?php echo active_menu(['product_view.php', 'product_add.php', 'product_edit.php']) ?>">
+            <a href="#" class="nav-link <?php echo active_page(['product_view.php', 'product_add.php', 'product_edit.php']) ?>">
+              <i class="bi bi-bar-chart nav-icon"></i>
+              <p>
+                จัดการค่าใช้จ่าย
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="product_view.html" class="nav-link <?php echo active_page(['product_view.php', 'product_edit.php']) ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>รายการค่าใช้จ่าย</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="product_add.html" class="nav-link <?php echo active_page(['product_add.php']) ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>เพิ่มข้อมูลค่าใช้จ่าย</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+        <?php } ?>
+        <!-- permission admin -->
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

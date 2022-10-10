@@ -16,7 +16,7 @@
         $stmt->execute([$name, $size]);
         $count = $stmt->fetchColumn();
         if($count > 0) {
-            echo 'Product name already exists!';
+            echo 'มีรายการนี้อยู่ในระบบแล้ว';
             http_response_code(400);
             return;
         }
@@ -26,7 +26,7 @@
         $stmt = $conn->prepare($sql);
         $stmt->execute([$code, $name, $size, $quantity, $price]); 
         http_response_code(200);
-        echo 'Created successfully';
+        echo 'เพิ่มข้อมูลสำเร็จ';
     } else {
         http_response_code(500);
         echo 'Server Error';

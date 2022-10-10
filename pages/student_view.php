@@ -10,17 +10,8 @@
     <title><?= $site_name ?> | <?= $page_name ?></title>
     <?php include dirname(__FILE__) . '/layout/link_style.php' ?>
 </head>
-<!--
-`body` tag options:
 
-  Apply one or more of the following classes to to the body tag
-  to get the desired effect
-
-  * sidebar-collapse
-  * sidebar-mini
--->
-
-<body class="hold-transition sidebar-mini">
+<body class="<?= $GLOBALS['class_body'] ?>">
     <div class="wrapper">
 
         <?php include dirname(__FILE__) . '/layout/preloader.php' ?>
@@ -55,10 +46,10 @@
                                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Action</th>
                                                 </tr>
                                             </thead>
-                                               <!-- ------------------ result ---------------------- -->
+                                            <!-- ------------------ result ---------------------- -->
                                             <tbody id="result">
                                             </tbody>
-                                               <!-- ------------------ result ---------------------- -->
+                                            <!-- ------------------ result ---------------------- -->
                                         </table>
                                     </div>
                                 </div>
@@ -72,6 +63,7 @@
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
+    <?php include dirname(__FILE__) . '/layout/footer.php' ?>
     </div>
     <!-- ./wrapper -->
 
@@ -79,28 +71,32 @@
     <?php include dirname(__FILE__) . '/layout/link_script.php' ?>
     <script>
         var html = '';
+
         function clear_tbody() {
             $('#result').html('');
         }
+
         function render() {
             $.ajax({
                 url: '../api/students/getall.php',
                 dataType: 'JSON',
                 type: 'GET',
                 success: function(res) {
-                    console.log(res);
                     let number = 1;
-                    for(let i = 0; i < res.length; i++) {
+                    for (let i = 0; i < res.length; i++) {
                         html += `
-                        <tr class="odd">
+                        <tr>
                             <td>${number++}</td>
                             <td>${res[i].code}</td>
                             <td>${res[i].fullname}</td>
                             <td>${res[i].nickname}</td>
                             <td>${res[i].class}</td>
-                            <td>
-                                <button data-id='${res[i].id}' class="btn btn-primary">ดูรายละเอียด</button>
-                                <button data-id='${res[i].id}' class="btn btn-default">แก้ไขข้อมูล</button>
+                            <td class="text-center">
+                                <form action = "student_edit.php" method = "post">
+                                <input type="hidden" name="id" value="${res[i].id}" >
+                                <button type="button" data-id='${res[i].id}' class="btn btn-primary" onclick="showdetail(this)" data-toggle="modal" data-target="#modal-xl">ดูรายละเอียด</button>
+                                <button type="submit" data-id='${res[i].id}' class="btn btn-default">แก้ไขข้อมูล</button>
+                                </form>
                             </td>
                         </tr>
                         `
@@ -110,16 +106,28 @@
                         $('#result').append(html);
                         $("#example1").DataTable({
                             "responsive": true,
-                            "lengthChange": false,
+                            "lengthChange": true,
                             "autoWidth": false,
-                            "buttons": ["copy", "csv", "excel", "pdf", "print"]
+                            "buttons": ["copy", "csv", "excel", "pdf", "print"],
+                            "language": {
+                                "lengthMenu": "รายละเอียด _MENU_ แถว",
+                                "info": "หน้าที่ _PAGE_ ของ _PAGES_ รวมทั้งหมด _TOTAL_ รายการ",
+                                "search": "ค้นหา",
+                                "paginate": {
+                                    "next": "ถัดไป",
+                                    "previous": "ก่อนหน้า",
+                                },
+                            }
+
                         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
                     }, 500);
                 }
             })
         }
         render();
+
     </script>
+    <?php include dirname(__FILE__).'/student_detail.php' ?>
 </body>
 
 </html>
